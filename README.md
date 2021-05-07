@@ -27,7 +27,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/protolambda/go-eth2-reqresp/methods"
 	"github.com/protolambda/go-eth2-reqresp/reqresp"
-	"github.com/protolambda/zrnt/eth2/beacon"
+	"github.com/protolambda/zrnt/eth2/beacon/phase0"
 	"github.com/protolambda/zrnt/eth2/configs"
 	"log"
 )
@@ -44,7 +44,7 @@ Server
 			_ = handler.WriteErrorChunk(reqresp.InvalidReqCode, "cannot decode request")
 		} else {
 			log.Printf("processing request for start %d, count %d, step %d", req.StartSlot, req.Count, req.Step)
-			var blocks []*beacon.SignedBeaconBlock = nil // TODO: source some response blocks based on the request.
+			var blocks []*phase0.SignedBeaconBlock = nil // TODO: source some response blocks based on the request.
 			for i, bl := range blocks {
 				if err := handler.StreamSSZ(reqresp.SuccessCode, spec.Wrap(bl)); err != nil {
 					log.Printf("failed to write block %d: %v", i, err)
@@ -61,7 +61,7 @@ Client
 	maxRespChunks := uint64(3)
 	err := method.RunRequest(context.Background(), host.NewStream, peerID, &req,
 		maxRespChunks, func(chunk reqresp.ChunkedResponseHandler) error {
-			var block beacon.SignedBeaconBlock
+			var block phase0.SignedBeaconBlock
 			if err := chunk.ReadObj(spec.Wrap(&block)); err != nil {
 				return fmt.Errorf("failed to decode block response chunk %d: %v", chunk.ChunkIndex(), err)
 			}

@@ -78,8 +78,12 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/protolambda/messagediff v1.4.0/go.mod h1:LboJp0EwIbJsePYpzh5Op/9G1/4mIztMRYzzwR0dR2M=
 github.com/protolambda/zrnt v0.14.0 h1:TIoHibrIZ6rOjV2NMnTdm9wBcaLYs+xdAeWWWwfuV9c=
 github.com/protolambda/zrnt v0.14.0/go.mod h1:rJSDrwIyY6L5L3GvOivJDgJDqvIfpNWIIWB0C3v3SVY=
+github.com/protolambda/zrnt v0.15.1 h1:AuF2XFqvktmbABkswEvurAyvHRNaJsTSeFvx+5K6Jhw=
+github.com/protolambda/zrnt v0.15.1/go.mod h1:99Kf8o4zIhSwx/G05jcnoxWdA9GalyofmmennKbsKBk=
 github.com/protolambda/ztyp v0.1.2 h1:wT8ansBvtUR48bKgo3ZraXWUKNfds0kabBIWyo9zGvA=
 github.com/protolambda/ztyp v0.1.2/go.mod h1:u9yT4ioIokwlHrOfiZ52ezHfKdza3phxhTJix01vGgU=
+github.com/protolambda/ztyp v0.1.4 h1:Kxn8W4ncsCs4ha27PRfyMLKRrfJkPdZYw4UV9yKqbw8=
+github.com/protolambda/ztyp v0.1.4/go.mod h1:u9yT4ioIokwlHrOfiZ52ezHfKdza3phxhTJix01vGgU=
 github.com/spacemonkeygo/spacelog v0.0.0-20180420211403-2296661a0572 h1:RC6RW7j+1+HkWaX/Yh71Ee5ZHaHYt7ZP4sQgUrm6cDU=
 github.com/spacemonkeygo/spacelog v0.0.0-20180420211403-2296661a0572/go.mod h1:w0SWMsp6j9O/dk4/ZpIhL+3CkG8ofA2vuv7k+ltqUMc=
 github.com/spaolacci/murmur3 v1.1.0 h1:7c1g84S4BPRrfL5Xrdp6fOJ206sU9y293DDHaoy0bLI=
