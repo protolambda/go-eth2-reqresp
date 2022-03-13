@@ -44,11 +44,22 @@ func (r *BlocksByRangeReqV1) String() string {
 }
 
 func BlocksByRangeRPCv1(spec *common.Spec) *reqresp.Method {
+	typ := phase0.SignedBeaconBlockType(spec)
+	minMax := reqresp.MinMaxSize{Min: typ.MinByteLength(), Max: typ.MaxByteLength()}
 	return &reqresp.Method{
-		Protocol:           "/eth2/beacon_chain/req/beacon_blocks_by_range/1/ssz_snappy",
-		RequestCodec:       reqresp.NewSSZCodec(blocksByRangeReqByteLen, blocksByRangeReqByteLen),
-		ResponseChunkCodec: reqresp.NewSSZCodec(0, phase0.SignedBeaconBlockType(spec).MaxByteLength()),
-		Compression:        reqresp.SnappyCompression{},
+		Protocol:         "/eth2/beacon_chain/req/beacon_blocks_by_range/1/ssz_snappy",
+		RequestMinMax:    reqresp.MinMaxSize{Min: blocksByRangeReqByteLen, Max: blocksByRangeReqByteLen},
+		Compression:      reqresp.SnappyCompression{},
+		ReadContextBytes: NoContext(minMax),
+	}
+}
+
+func BlocksByRangeRPCv2(spec *common.Spec, blocksMinMax map[common.ForkDigest]reqresp.MinMaxSize) *reqresp.Method {
+	return &reqresp.Method{
+		Protocol:         "/eth2/beacon_chain/req/beacon_blocks_by_range/2/ssz_snappy",
+		RequestMinMax:    reqresp.MinMaxSize{Min: blocksByRangeReqByteLen, Max: blocksByRangeReqByteLen},
+		Compression:      reqresp.SnappyCompression{},
+		ReadContextBytes: BlocksContext(blocksMinMax),
 	}
 }
 
@@ -94,10 +105,21 @@ func (r BlocksByRootReqV1) String() string {
 }
 
 func BlocksByRootRPCv1(spec *common.Spec) *reqresp.Method {
+	typ := phase0.SignedBeaconBlockType(spec)
+	minMax := reqresp.MinMaxSize{Min: typ.MinByteLength(), Max: typ.MaxByteLength()}
 	return &reqresp.Method{
-		Protocol:           "/eth2/beacon_chain/req/beacon_blocks_by_root/1/ssz_snappy",
-		RequestCodec:       reqresp.NewSSZCodec(0, 32*MAX_REQUEST_BLOCKS_BY_ROOT),
-		ResponseChunkCodec: reqresp.NewSSZCodec(0, phase0.SignedBeaconBlockType(spec).MaxByteLength()),
-		Compression:        reqresp.SnappyCompression{},
+		Protocol:         "/eth2/beacon_chain/req/beacon_blocks_by_root/1/ssz_snappy",
+		RequestMinMax:    reqresp.MinMaxSize{0, 32 * MAX_REQUEST_BLOCKS_BY_ROOT},
+		Compression:      reqresp.SnappyCompression{},
+		ReadContextBytes: NoContext(minMax),
+	}
+}
+
+func BlocksByRootRPCv2(spec *common.Spec, blocksMinMax map[common.ForkDigest]reqresp.MinMaxSize) *reqresp.Method {
+	return &reqresp.Method{
+		Protocol:         "/eth2/beacon_chain/req/beacon_blocks_by_root/2/ssz_snappy",
+		RequestMinMax:    reqresp.MinMaxSize{0, 32 * MAX_REQUEST_BLOCKS_BY_ROOT},
+		Compression:      reqresp.SnappyCompression{},
+		ReadContextBytes: BlocksContext(blocksMinMax),
 	}
 }

@@ -76,8 +76,11 @@ func EncodeResult(result ResponseCode, w io.Writer) error {
 
 // StreamChunk takes the (decompressed) response message from the msg io.WriterTo,
 // and writes it as a chunk with given result code to the output writer. The compression is optional and may be nil.
-func StreamChunk(result ResponseCode, size uint64, r io.WriterTo, w io.Writer, comp Compression) error {
+func StreamChunk(result ResponseCode, size uint64, contextBytes []byte, r io.WriterTo, w io.Writer, comp Compression) error {
 	if err := EncodeResult(result, w); err != nil {
+		return err
+	}
+	if _, err := w.Write(contextBytes); err != nil {
 		return err
 	}
 	return StreamHeaderAndPayload(size, r, w, comp)

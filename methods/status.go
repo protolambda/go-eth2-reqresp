@@ -6,8 +6,8 @@ import (
 )
 
 var StatusRPCv1 = reqresp.Method{
-	Protocol:           "/eth2/beacon_chain/req/status/1/ssz_snappy",
-	RequestCodec:       reqresp.NewSSZCodec(common.StatusByteLen, common.StatusByteLen),
-	ResponseChunkCodec: reqresp.NewSSZCodec(common.StatusByteLen, common.StatusByteLen),
-	Compression:        reqresp.SnappyCompression{},
+	Protocol:         "/eth2/beacon_chain/req/status/1/ssz_snappy",
+	RequestMinMax:    reqresp.MinMaxSize{Min: common.StatusByteLen, Max: common.StatusByteLen},
+	Compression:      reqresp.SnappyCompression{},
+	ReadContextBytes: NoContext(reqresp.MinMaxSize{Min: common.StatusByteLen, Max: common.StatusByteLen}),
 }
